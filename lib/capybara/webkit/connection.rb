@@ -55,6 +55,16 @@ module Capybara::Webkit
       response
     end
 
+    def kill_process
+      if RUBY_PLATFORM =~ /mingw32/
+        Process.kill(9, @pid)
+      else
+        Process.kill("INT", @pid)
+      end
+    rescue Errno::ESRCH
+      # This just means that the webkit_server process has already ended
+    end
+
     private
 
     def start_server
