@@ -56,7 +56,7 @@ module Capybara::Webkit
     end
 
     def kill_process
-      if RUBY_PLATFORM =~ /mingw32/
+      if RUBY_PLATFORM =~ /mingw32/ or RUBY_PLATFORM == 'x86_64-linux'
         Process.kill(9, @pid)
       else
         Process.kill("INT", @pid)
